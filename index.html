@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PEELVERSE SELLER — Cổng Đăng ký &amp; Xác minh Người bán</title>
+  <meta name="description" content="Cổng đăng ký bán hàng và xác minh danh tính người bán chính thức của PEELVERSE." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <!-- Header -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="./" class="brand-logo" aria-label="PEELVERSE Seller Portal">
+          <svg class="brand-mark" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2.5C7 6 4.5 10.5 4.5 15a7.5 7.5 0 0 0 15 0c0-4.5-2.5-9-7.5-12.5Z" />
+            <path d="M12 7v11.5" />
+            <path d="M12 12.5l3.5-2.5" />
+            <path d="M12 15l-3.5-2.5" />
+          </svg>
+          <span class="brand-text">PEELVERSE <span class="brand-sub">SELLER</span></span>
+        </a>
+
+        <div class="header-actions">
+          <a href="https://libia209.github.io/PEELVERSE-/" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 12H5" />
+              <path d="m12 19-7-7 7-7" />
+            </svg>
+            <span>Về trang chủ PEELVERSE</span>
+          </a>
+
+          <div id="accountStatus" class="account-status" aria-live="polite">
+            <span class="status-pill status-pill--muted">Đang kiểm tra...</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+      <!-- Page Intro -->
+      <section class="hero-intro">
+        <p class="eyebrow">Cổng Người bán &amp; Nhà sáng tạo</p>
+        <h1 class="page-title">Đăng ký &amp; Xác minh Người bán</h1>
+        <p class="page-subtitle">
+          Hoàn tất xác minh danh tính để kích hoạt gian hàng và đồng bộ trực tiếp với hệ sinh thái PEELVERSE.
+        </p>
+      </section>
+
+      <!-- Global Loading State -->
+      <section id="loadingSection" class="card state-card" aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="state-title">Đang tải trạng thái tài khoản...</p>
+        <p class="state-desc">Vui lòng đợi trong giây lát.</p>
+      </section>
+
+      <!-- Unauthenticated: Login / Sign Up -->
+      <section id="authSection" class="card auth-card" hidden>
+        <div class="card-header">
+          <div class="icon-badge" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+              <polyline points="10 17 15 12 10 7" />
+              <line x1="15" y1="12" x2="3" y2="12" />
+            </svg>
+          </div>
+          <div>
+            <h2 class="card-title">Đăng nhập hoặc Tạo tài khoản</h2>
+            <p class="card-subtitle">Dùng chung tài khoản với website PEELVERSE</p>
+          </div>
+        </div>
+
+        <div class="shared-notice">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16v-4" />
+            <path d="M12 8h.01" />
+          </svg>
+          <span>Thông tin đăng nhập và hồ sơ người bán của bạn được đồng bộ trực tiếp với tài khoản tại <strong>libia209.github.io/PEELVERSE-</strong>.</span>
+        </div>
+
+        <button type="button" id="googleLoginBtn" class="btn btn-outline btn-full">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 12h8.5" />
+            <path d="M15.5 7.5A6 6 0 1 0 17.5 15" />
+          </svg>
+          <span>Tiếp tục với Google</span>
+        </button>
+
+        <div class="divider">
+          <span>hoặc đăng nhập bằng Email OTP</span>
+        </div>
+
+        <!-- Step 1: Send OTP -->
+        <form id="otpRequestForm" class="stack-form" novalidate>
+          <div class="form-group">
+            <label for="authEmail" class="form-label">Địa chỉ Email</label>
+            <input
+              type="email"
+              id="authEmail"
+              name="email"
+              class="form-input"
+              placeholder="ten@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+          <button type="submit" id="sendOtpBtn" class="btn btn-primary btn-full">
+            Gửi mã xác thực OTP
+          </button>
+        </form>
+
+        <!-- Step 2: Verify OTP -->
+        <form id="otpVerifyForm" class="stack-form otp-verify-box" hidden novalidate>
+          <div class="otp-sent-banner">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="20" height="16" x="2" y="4" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+            <span>Mã xác thực đã được gửi tới <strong id="otpTargetEmail"></strong>. Bạn có thể nhập mã 6 số hoặc bấm vào liên kết trong email.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="otpCodeInput" class="form-label">Mã OTP (6 chữ số)</label>
+            <input
+              type="text"
+              id="otpCodeInput"
+              name="otp"
+              class="form-input input-mono"
+              placeholder="000000"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              maxlength="6"
+              required
+            />
+          </div>
+
+          <div class="btn-row">
+            <button type="submit" id="verifyOtpBtn" class="btn btn-primary">
+              Xác nhận &amp; Đăng nhập
+            </button>
+            <button type="button" id="changeEmailBtn" class="btn btn-ghost">
+              Đổi email
+            </button>
+          </div>
+        </form>
+
+        <div id="authFeedback" class="feedback-banner" hidden aria-live="polite"></div>
+      </section>
+
+      <!-- Authenticated: Status Result Card (verified / needs_review / rejected) -->
+      <section id="statusResultSection" class="card status-result-card" hidden aria-live="polite"></section>
+
+      <!-- Authenticated: Verification Submitting State -->
+      <section id="submittingSection" class="card state-card" hidden aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="state-title">Đang gửi hồ sơ &amp; đối chiếu xác minh...</p>
+        <p class="state-desc">Hệ thống đang tải lên giấy tờ bảo mật và kiểm duyệt thông tin tự động. Vui lòng không đóng trình duyệt.</p>
+      </section>
+
+      <!-- Authenticated: Seller Registration & KYC Form -->
+      <section id="kycFormSection" class="card form-card" hidden>
+        <div class="card-header">
+          <div class="icon-badge" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="14" x="3" y="5" rx="2" />
+              <circle cx="9" cy="12" r="2" />
+              <path d="M15 10h3" />
+              <path d="M15 14h3" />
+            </svg>
+          </div>
+          <div>
+            <h2 class="card-title">Hồ sơ Đăng ký &amp; Xác minh CCCD</h2>
+            <p class="card-subtitle">Yêu cầu chủ tài khoản từ đủ 18 tuổi trở lên theo quy định pháp luật</p>
+          </div>
+        </div>
+
+        <form id="sellerKycForm" class="kyc-form" novalidate>
+          <!-- Section 1: Identity -->
+          <fieldset class="form-fieldset">
+            <legend class="fieldset-legend">1. Thông tin định danh cá nhân</legend>
+
+            <div class="form-grid">
+              <div class="form-group form-group--full">
+                <label for="fullName" class="form-label">Họ và tên đúng theo CCCD <span class="req">*</span></label>
+                <input
+                  type="text"
+                  id="fullName"
+                  name="full_name"
+                  class="form-input"
+                  placeholder="Ví dụ: NGUYỄN VĂN AN"
+                  autocomplete="name"
+                  required
+                />
+                <span class="field-error" id="err-fullName"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="dateOfBirth" class="form-label">Ngày sinh (đủ 18 tuổi) <span class="req">*</span></label>
+                <input
+                  type="date"
+                  id="dateOfBirth"
+                  name="date_of_birth"
+                  class="form-input"
+                  required
+                />
+                <span class="field-error" id="err-dateOfBirth"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="cccdNumber" class="form-label">Số CCCD (12 chữ số) <span class="req">*</span></label>
+                <input
+                  type="text"
+                  id="cccdNumber"
+                  name="cccd_number"
+                  class="form-input input-mono"
+                  placeholder="079099001234"
+                  inputmode="numeric"
+                  maxlength="12"
+                  autocomplete="off"
+                  required
+                />
+                <span class="field-error" id="err-cccdNumber"></span>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Section 2: CCCD Upload -->
+          <fieldset class="form-fieldset">
+            <legend class="fieldset-legend">2. Ảnh chụp Căn cước công dân</legend>
+            <p class="fieldset-hint">
+              Chỉ chấp nhận định dạng JPG, PNG hoặc WebP, dung lượng tối đa 3MB/ảnh. Chụp rõ nét, không chói sáng hay mất góc.
+            </p>
+
+            <div class="upload-grid">
+              <!-- Front -->
+              <div class="upload-box" id="frontUploadBox">
+                <label for="cccdFrontInput" class="upload-label">
+                  <span class="upload-title">Ảnh CCCD mặt trước <span class="req">*</span></span>
+                  <div class="upload-dropzone" id="frontDropzone">
+                    <div class="upload-placeholder" id="frontPlaceholder">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                      </svg>
+                      <span>Chọn ảnh mặt trước</span>
+                      <small>JPG, PNG, WebP · Tối đa 3MB</small>
+                    </div>
+                    <img id="frontPreviewImg" class="upload-preview" alt="Xem trước CCCD mặt trước" hidden />
+                  </div>
+                </label>
+                <input
+                  type="file"
+                  id="cccdFrontInput"
+                  name="cccd_front"
+                  class="sr-only"
+                  accept="image/jpeg,image/png,image/webp"
+                />
+                <div class="upload-meta" id="frontMeta" hidden>
+                  <span class="upload-filename" id="frontFileName"></span>
+                  <button type="button" class="text-btn" id="frontClearBtn">Xoá ảnh</button>
+                </div>
+                <span class="field-error" id="err-cccdFront"></span>
+              </div>
+
+              <!-- Back -->
+              <div class="upload-box" id="backUploadBox">
+                <label for="cccdBackInput" class="upload-label">
+                  <span class="upload-title">Ảnh CCCD mặt sau <span class="req">*</span></span>
+                  <div class="upload-dropzone" id="backDropzone">
+                    <div class="upload-placeholder" id="backPlaceholder">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                      </svg>
+                      <span>Chọn ảnh mặt sau</span>
+                      <small>JPG, PNG, WebP · Tối đa 3MB</small>
+                    </div>
+                    <img id="backPreviewImg" class="upload-preview" alt="Xem trước CCCD mặt sau" hidden />
+                  </div>
+                </label>
+                <input
+                  type="file"
+                  id="cccdBackInput"
+                  name="cccd_back"
+                  class="sr-only"
+                  accept="image/jpeg,image/png,image/webp"
+                />
+                <div class="upload-meta" id="backMeta" hidden>
+                  <span class="upload-filename" id="backFileName"></span>
+                  <button type="button" class="text-btn" id="backClearBtn">Xoá ảnh</button>
+                </div>
+                <span class="field-error" id="err-cccdBack"></span>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Section 3: Store Info -->
+          <fieldset class="form-fieldset">
+            <legend class="fieldset-legend">3. Thông tin gian hàng &amp; Liên hệ</legend>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="shopName" class="form-label">Tên gian hàng / Thương hiệu <span class="req">*</span></label>
+                <input
+                  type="text"
+                  id="shopName"
+                  name="shop_name"
+                  class="form-input"
+                  placeholder="Ví dụ: Xưởng Mộc Thủ Công An Nhiên"
+                  required
+                />
+                <span class="field-error" id="err-shopName"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="phone" class="form-label">Số điện thoại liên hệ (10 số) <span class="req">*</span></label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  class="form-input input-mono"
+                  placeholder="0901234567"
+                  inputmode="tel"
+                  maxlength="10"
+                  autocomplete="tel"
+                  required
+                />
+                <span class="field-error" id="err-phone"></span>
+              </div>
+
+              <div class="form-group form-group--full">
+                <label for="businessAddress" class="form-label">Địa chỉ kinh doanh <span class="req">*</span></label>
+                <input
+                  type="text"
+                  id="businessAddress"
+                  name="business_address"
+                  class="form-input"
+                  placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố"
+                  autocomplete="street-address"
+                  required
+                />
+                <span class="field-error" id="err-businessAddress"></span>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Commitment -->
+          <div class="commitment-box">
+            <label class="checkbox-label">
+              <input type="checkbox" id="commitmentCheck" name="commitment" required />
+              <span class="checkbox-custom" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <span class="checkbox-text">
+                Tôi cam kết toàn bộ thông tin và giấy tờ CCCD cung cấp là chính chủ, trung thực, hợp pháp và tôi đã đủ 18 tuổi trở lên.
+              </span>
+            </label>
+            <span class="field-error" id="err-commitment"></span>
+          </div>
+
+          <div id="formGlobalError" class="feedback-banner feedback-banner--error" hidden aria-live="polite"></div>
+
+          <div class="submit-area">
+            <button type="submit" id="submitKycBtn" class="btn btn-primary btn-full btn-lg">
+              Gửi hồ sơ đăng ký
+            </button>
+            <p class="submit-note">
+              Lưu ý: Hệ thống sẽ tự động kiểm duyệt hồ sơ và xác minh giấy tờ (1–2 ngày đối với hồ sơ cần xem xét thêm).
+            </p>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-brand">PEELVERSE SELLER PORTAL</p>
+        <p class="footer-security">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          <span>Dữ liệu giấy tờ được mã hoá lưu trữ riêng tư và không lưu trên trình duyệt.</span>
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
